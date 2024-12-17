@@ -61,8 +61,14 @@ section {
   color: white;
 }
 
+#contact {
+  background-color: black;
+  color: white;
+}
 /* Keep the previous styles as is */
 #projects {
+  background-color: #000000;
+  color: white;
   position: relative;
   padding: 20px;
   text-align: center;
@@ -108,7 +114,7 @@ section {
 .projects-container p {
   margin-top: 10px;
   font-size: 1.2em;
-  color: #fff;
+  color: #000000;
 }
 
 /* Optional: Add some styles for a nice hover effect */
