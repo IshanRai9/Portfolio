@@ -1,0 +1,118 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: system-ui;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #333;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+header .name {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+header nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+header nav ul li {
+  display: inline;
+}
+
+header nav ul li a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+  color: #f39c12;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section Styles */
+section {
+  padding: 4rem 2rem;
+}
+
+#about, #skills, #education {
+  background-color: #000000;
+  color: white;
+}
+
+/* Keep the previous styles as is */
+#projects {
+  position: relative;
+  padding: 20px;
+  text-align: center;
+  overflow: hidden;  /* Prevent scrolling of the entire section */
+}
+
+#projects h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.projects-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#image-track {
+  display: flex;
+  gap: 4vmin;
+  position: relative;
+  left: 50%;
+  top: 10px;  /* Move images down from the text */
+  transform: translateX(-50%);
+  user-select: none;
+  transition: transform 0.3s ease-in-out;
+}
+
+#image-track > .image {
+  width: 40vmin;
+  height: 56vmin;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Allow horizontal scrolling when hovered */
+#image-track:hover {
+  transform: translateX(0); /* Re-enable scroll effect */
+}
+
+.projects-container p {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #fff;
+}
+
+/* Optional: Add some styles for a nice hover effect */
+#image-track .image:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out;
+}
