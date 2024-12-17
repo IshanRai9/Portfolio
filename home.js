@@ -1,77 +1,97 @@
+// Get the image track element
 const track = document.getElementById("image-track");
 
-const handleOnWheel = e => {
-  // Only handle wheel event when hovering over the image track
+track.dataset.percentage = "0";
+track.dataset.prevPercentage = "0";
+
+// Handle wheel event for horizontal scrolling
+const handleOnWheel = (e) => {
+  // Check if the cursor is hovering over the image track
   if (track.matches(":hover")) {
-    e.preventDefault();  // Prevent page scrolling while hovering over the image track
-    
+    e.preventDefault(); // Prevent the default page scrolling behavior
+
     const maxDelta = window.innerWidth / 2;
 
-    // Scroll direction should be horizontal (based on deltaY for vertical scrolling)
-    const percentage = (e.deltaY / maxDelta) * -10;
+    // Calculate the percentage for horizontal scrolling
+    const percentage = (e.deltaY / maxDelta) * -30;
     const nextPercentageUnconstrained = parseFloat(track.dataset.percentage || 0) + percentage;
-    const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
+    const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -70);
 
+    // Update the dataset with the new percentage
     track.dataset.percentage = nextPercentage;
 
-    // Move the images horizontally
-    track.animate({
-      transform: `translateX(${nextPercentage}%)`
-    }, { duration: 1200, fill: "forwards" });
+    // Animate the track's horizontal position
+    track.animate(
+      {
+        transform: `translateX(${nextPercentage}%)`,
+      },
+      { duration: 1200, fill: "forwards" }
+    );
 
-    // Animate each image's horizontal movement
+    // Animate each image's object position
     for (const image of track.getElementsByClassName("image")) {
-      image.animate({
-        objectPosition: `${100 + nextPercentage}% center`
-      }, { duration: 1200, fill: "forwards" });
+      image.animate(
+        {
+          objectPosition: `${100 + nextPercentage}% center`,
+        },
+        { duration: 1200, fill: "forwards" }
+      );
     }
   }
-}
+};
 
 // Attach wheel event listener
-window.addEventListener('wheel', handleOnWheel, { passive: false });  // passive: false to prevent default scroll behavior when needed
-window.onwheel = e => handleOnWheel(e);
+window.addEventListener("wheel", handleOnWheel, { passive: false });
 
-const handleOnDown = e => track.dataset.mouseDownAt = e.clientX;
+// Handle mouse down event (start dragging)
+const handleOnDown = (e) => (track.dataset.mouseDownAt = e.clientX);
 
+// Handle mouse up event (stop dragging)
 const handleOnUp = () => {
-  track.dataset.mouseDownAt = "0";  
+  track.dataset.mouseDownAt = "0";
   track.dataset.prevPercentage = track.dataset.percentage;
-}
+};
 
-const handleOnMove = e => {
-  if(track.dataset.mouseDownAt === "0") return;
-  
-  const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX,
-        maxDelta = window.innerWidth / 2;
-  
-  const percentage = (mouseDelta / maxDelta) * -100,
-        nextPercentageUnconstrained = parseFloat(track.dataset.prevPercentage) + percentage,
-        nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
-  
+// Handle mouse move event (dragging)
+const handleOnMove = (e) => {
+  if (track.dataset.mouseDownAt === "0") return;
+
+  const mouseDelta = parseFloat(track.dataset.mouseDownAt) - e.clientX;
+  const maxDelta = window.innerWidth / 2;
+
+  const percentage = (mouseDelta / maxDelta) * -30;
+  const nextPercentageUnconstrained =
+    parseFloat(track.dataset.prevPercentage) + percentage;
+  const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -70);
+
+  // Update the dataset with the new percentage
   track.dataset.percentage = nextPercentage;
-  
-  track.animate({
-    transform: `translate(${nextPercentage}%, -50%)`
-  }, { duration: 1200, fill: "forwards" });
-  
-  for(const image of track.getElementsByClassName("image")) {
-    image.animate({
-      objectPosition: `${100 + nextPercentage}% center`
-    }, { duration: 1200, fill: "forwards" });
+
+  // Animate the track's horizontal position
+  track.animate(
+    {
+      transform: `translateX(${nextPercentage}%)`,
+    },
+    { duration: 1200, fill: "forwards" }
+  );
+
+  // Animate each image's object position
+  for (const image of track.getElementsByClassName("image")) {
+    image.animate(
+      {
+        objectPosition: `${100 + nextPercentage}% center`,
+      },
+      { duration: 1200, fill: "forwards" }
+    );
   }
-}
+};
 
-/* -- Had to add extra lines for touch events -- */
+// Event listeners for mouse events
+window.addEventListener("mousedown", (e) => handleOnDown(e));
+window.addEventListener("mouseup", handleOnUp);
+window.addEventListener("mousemove", (e) => handleOnMove(e));
 
-window.onmousedown = e => handleOnDown(e);
-
-window.ontouchstart = e => handleOnDown(e.touches[0]);
-
-window.onmouseup = e => handleOnUp(e);
-
-window.ontouchend = e => handleOnUp(e.touches[0]);
-
-window.onmousemove = e => handleOnMove(e);
-
-window.ontouchmove = e => handleOnMove(e.touches[0]);
+// Event listeners for touch events
+window.addEventListener("touchstart", (e) => handleOnDown(e.touches[0]));
+window.addEventListener("touchend", (e) => handleOnUp());
+window.addEventListener("touchmove", (e) => handleOnMove(e.touches[0]));

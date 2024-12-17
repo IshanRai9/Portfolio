@@ -1,10 +1,12 @@
 /* General Styles */
 body {
   margin: 0;
-  font-family: system-ui;
+  font-family: system-ui, sans-serif;
   line-height: 1.6;
-  margin: 0;
   padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+  background-color: #000;
+  color: white;
 }
 
 header {
@@ -54,48 +56,38 @@ html {
 /* Section Styles */
 section {
   padding: 4rem 2rem;
-}
-
-#about, #skills, #education {
-  background-color: #000000;
-  color: white;
-}
-
-#contact {
-  background-color: black;
-  color: white;
-}
-/* Keep the previous styles as is */
-#projects {
-  background-color: #000000;
-  color: white;
-  position: relative;
-  padding: 20px;
   text-align: center;
-  overflow: hidden;  /* Prevent scrolling of the entire section */
+}
+
+#about, #skills, #education, #contact, #projects {
+  background-color: #000000;
+  color: white;
+}
+
+/* My Projects Section */
+#projects {
+  position: relative;
+  padding: 4rem 2rem;
+  text-align: center;
 }
 
 #projects h2 {
   font-size: 2em;
-  margin-bottom: 10px;
-}
-
-.projects-container {
+  z-index: 10;
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 #image-track {
-  display: flex;
-  gap: 4vmin;
+  display:flow-root;
+  gap: 10vmin;
   position: relative;
-  left: 50%;
-  top: 10px;  /* Move images down from the text */
-  transform: translateX(-50%);
+  
   user-select: none;
-  transition: transform 0.3s ease-in-out;
+  cursor: grab; /* Indicate draggable content */
+}
+
+#image-track:active {
+  cursor: grabbing; /* Indicate dragging state */
 }
 
 #image-track > .image {
@@ -106,19 +98,14 @@ section {
   transition: transform 0.3s ease-in-out;
 }
 
-/* Allow horizontal scrolling when hovered */
-#image-track:hover {
-  transform: translateX(0); /* Re-enable scroll effect */
-}
+/* Responsive Adjustments */
+@media (max-width: 800px) {
+  #image-track > .image {
+    width: 60vmin;
+    height: 84vmin;
+  }
 
-.projects-container p {
-  margin-top: 10px;
-  font-size: 1.2em;
-  color: #000000;
-}
-
-/* Optional: Add some styles for a nice hover effect */
-#image-track .image:hover {
-  transform: scale(1.1);
-  transition: transform 0.3s ease-in-out;
+  #projects h2 {
+    font-size: 1.5em;
+  }
 }
